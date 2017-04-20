@@ -1,7 +1,7 @@
 package algorithm.sort;
 
 
-public interface Sorter {
+public interface Sorter{
 
 
     int[] sort(int[] nums);
