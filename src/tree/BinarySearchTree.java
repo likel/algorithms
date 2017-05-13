@@ -7,21 +7,22 @@ import java.util.List;
 /**
  * Binary Search Tree
  */
-public class BinarySearchTree {
+public class BinarySearchTree<K extends Comparable<K>, V> {
 
-
-    private static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode parent;
+    private class Node {
+        V value;
+        K key;
+        Node left;
+        Node right;
+        Node parent;
         boolean isLeftChild;
 
-        public TreeNode(int val) {
-            this.val = val;
+        public Node(K key, V value) {
+            this.key = key;
+            this.value = value;
         }
 
-        public void setLeft(TreeNode node) {
+        public void setLeft(Node node) {
             left = node;
             if (left != null) {
                 left.parent = this;
@@ -29,7 +30,7 @@ public class BinarySearchTree {
             }
         }
 
-        public void setRight(TreeNode node) {
+        public void setRight(Node node) {
             right = node;
             if (right != null) {
                 right.parent = this;
@@ -39,16 +40,17 @@ public class BinarySearchTree {
 
         @Override
         public String toString() {
-            return "val=" + val + " parent=" + (parent == null ? null : parent.val)
-                    + " left=" + (left == null ? null : left.val)
-                    + " right=" + (right == null ? null : right.val);
+            return "val=" + value
+                    + " parent=" + (parent == null ? null : parent.value)
+                    + " left=" + (left == null ? null : left.value)
+                    + " right=" + (right == null ? null : right.value);
         }
     }
 
     /**
      * Root node of tree
      */
-    private TreeNode root;
+    private Node root;
 
     private int size;
 
@@ -56,13 +58,15 @@ public class BinarySearchTree {
         return size;
     }
 
-    public TreeNode find(int val) {
-        TreeNode node = root;
+    private Node lookup(K key) {
+        if (key == null) {
+            throw new NullPointerException();
+        }
+        Node node = root;
         while (node != null) {
-            if (node.val == val) {
-                // Found it
+            if (node.key.equals(key)) {
                 return node;
-            } else if (node.val > val) {
+            } else if (node.key.compareTo(key) > 0) {
                 node = node.left;
             } else {
                 node = node.right;
@@ -71,54 +75,63 @@ public class BinarySearchTree {
         return null;
     }
 
-    public TreeNode insert(int val) {
-        if (root == null) {
-            root = new TreeNode(val);
-            size = 1;
-            return root;
+    public boolean contains(K key) {
+        return lookup(key) != null;
+    }
+
+    public V get(K key) {
+        Node node = lookup(key);
+        return node == null ? null : node.value;
+    }
+
+    public void put(K key, V value) {
+        if (key == null) {
+            throw new IllegalArgumentException("Key is null");
         }
-        TreeNode node = root;
+        if (root == null) {
+            root = new Node(key, value);
+            size = 1;
+            return;
+        }
+        Node node = root;
 
         while (true) {
-            if (node.val == val) {
-                // Already existed, do nothing
-                return node;
-            } else if (val < node.val) {
+            if (node.key.equals(key)) {
+                // Overwrite it
+                node.value = value;
+                return;
+            } else if (node.key.compareTo(key) > 0) {
                 if (node.left == null) {
-                    // Create a left child node
-                    node.setLeft(new TreeNode(val));
+                    node.setLeft(new Node(key, value));
                     ++size;
-                    return node.left;
+                    return;
                 }
                 node = node.left;
             } else {
                 if (node.right == null) {
-                    // Create a right child node
-                    node.setRight(new TreeNode(val));
+                    node.setRight(new Node(key, value));
                     ++size;
-                    return node.right;
+                    return;
                 }
                 node = node.right;
             }
         }
     }
 
-    public TreeNode delete(int val) {
-        TreeNode node = find(val);
+    public V delete(K key) {
+        Node node = lookup(key);
         if (node == null) {
-            // Not found
-            System.out.println("Not found " + val);
             return null;
         }
-        // Node is leaf or only one child
         if (node.left == null || node.right == null) {
-            TreeNode child = node.left == null ? node.right : node.left;
+            // Node is leaf or only one child
+            Node child = node.left == null ? node.right : node.left;
             setNode(node, child);
             --size;
-            return node;
+            return node.value;
         }
         // Find the maximum node in left child tree
-        TreeNode maxLeft = node.left;
+        Node maxLeft = node.left;
         while (maxLeft.right != null) {
             maxLeft = maxLeft.right;
         }
@@ -127,16 +140,16 @@ public class BinarySearchTree {
         setNode(maxLeft, maxLeft.left);
         --size;
         setNode(node, maxLeft);
-        return node;
+        return node.value;
     }
 
-    private void setNode(TreeNode node, TreeNode n) {
+    private void setNode(Node node, Node n) {
         if (node == root) {
             if ((root = n) != null) {
                 root.parent = null;
             }
         } else {
-            TreeNode p = node.parent;
+            Node p = node.parent;
             if (node.isLeftChild) {
                 p.setLeft(n);
             } else {
@@ -157,16 +170,16 @@ public class BinarySearchTree {
         }
     }
 
-    private void print(TreeNode node) {
+    private void debug(Node node) {
         if (node == null) return;
         System.out.println(node.toString());
-        print(node.left);
-        print(node.right);
+        debug(node.left);
+        debug(node.right);
     }
 
 
     public static void main(String[] args) {
-        BinarySearchTree tree = new BinarySearchTree();
+        BinarySearchTree<Integer, Integer> tree = new BinarySearchTree<>();
         List<Integer> nums = new ArrayList<>();
 
         int numCount = 100;
@@ -175,26 +188,25 @@ public class BinarySearchTree {
             nums.add(i);
         }
         Collections.shuffle(nums);
-        for (int i = 0; i < numCount; i++) {
-            System.out.println(nums.get(i));
-        }
         System.out.println("Insert start");
 
-        for (int i = 0; i < numCount; i++) {
-            tree.insert(nums.get(i));
+        for (int n : nums) {
+            tree.put(n, n);
+            System.out.println("Tree contains " + n + " " + tree.contains(n));
+            System.out.println("Tree lookup " + n + "=" + tree.get(n));
         }
-        tree.print(tree.root);
+        tree.debug(tree.root);
 
         System.out.println("Tree size=" + tree.size());
         for (int n : nums) {
             System.out.println("Deleting " + n);
-            TreeNode node = tree.delete(n);
+            Integer node = tree.delete(n);
             if (node == null) {
                 System.out.println("Deleting " + n + " failed. Something is wrong.");
                 break;
             }
-            System.out.println("Deleted " + node.val);
-            tree.print(tree.root);
+            System.out.println("Deleted " + node);
+            tree.debug(tree.root);
         }
         System.out.println(tree.size());
     }
