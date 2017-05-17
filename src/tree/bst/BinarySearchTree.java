@@ -1,4 +1,4 @@
-package tree;
+package tree.bst;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +15,6 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
         Node left;
         Node right;
         Node parent;
-        boolean isLeftChild;
 
         public Node(K key, V value) {
             this.key = key;
@@ -26,7 +25,6 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
             left = node;
             if (left != null) {
                 left.parent = this;
-                left.isLeftChild = true;
             }
         }
 
@@ -34,7 +32,6 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
             right = node;
             if (right != null) {
                 right.parent = this;
-                right.isLeftChild = false;
             }
         }
 
@@ -51,7 +48,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
      * Root node of tree
      */
     private Node root;
-
+    // Number of nodes
     private int size;
 
     public int size() {
@@ -75,18 +72,36 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
         return null;
     }
 
+    /**
+     * Determine whether a key is existing
+     *
+     * @param key key used to check
+     * @return true if key contained in tree else false
+     */
     public boolean contains(K key) {
         return lookup(key) != null;
     }
 
+    /**
+     * Query with given key
+     *
+     * @param key key used to query
+     * @return the data associated with given key
+     */
     public V get(K key) {
         Node node = lookup(key);
         return node == null ? null : node.value;
     }
 
+    /**
+     * Put a key and value into tree. If key already in tree, overwrite its value.
+     *
+     * @param key   key of new node
+     * @param value value of new node
+     */
     public void put(K key, V value) {
         if (key == null) {
-            throw new IllegalArgumentException("Key is null");
+            throw new IllegalArgumentException("Key must not be null");
         }
         if (root == null) {
             root = new Node(key, value);
@@ -150,7 +165,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
             }
         } else {
             Node p = node.parent;
-            if (node.isLeftChild) {
+            if (p.left == node) {
                 p.setLeft(n);
             } else {
                 p.setRight(n);
