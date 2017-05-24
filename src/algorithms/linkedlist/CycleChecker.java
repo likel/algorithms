@@ -1,7 +1,7 @@
-package linkedlist;
+package algorithms.linkedlist;
 
 
-public class LinkedListCycleChecker {
+public class CycleChecker {
 
 
     private static class ListNode {
@@ -77,7 +77,7 @@ public class LinkedListCycleChecker {
     }
 
     public static void main(String[] args) {
-        LinkedListCycleChecker lc = new LinkedListCycleChecker();
+        CycleChecker lc = new CycleChecker();
 
         ListNode node = new ListNode(1);
         node.next = node;

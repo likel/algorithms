@@ -1,7 +1,7 @@
-package algorithm.sort;
+package algorithms.sort;
 
 
-public class QuickSorter implements Sorter {
+public class MergeSorter implements Sorter {
 
     @Override
     public int[] sort(int[] nums) {

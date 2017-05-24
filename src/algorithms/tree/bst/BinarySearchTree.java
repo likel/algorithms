@@ -1,11 +1,11 @@
-package tree.bst;
+package algorithms.tree.bst;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Binary Search Tree
+ * Binary Search Tree (BST)
  */
 public class BinarySearchTree<K extends Comparable<K>, V> {
 
@@ -16,19 +16,19 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
         Node right;
         Node parent;
 
-        public Node(K key, V value) {
+        Node(K key, V value) {
             this.key = key;
             this.value = value;
         }
 
-        public void setLeft(Node node) {
+        void setLeft(Node node) {
             left = node;
             if (left != null) {
                 left.parent = this;
             }
         }
 
-        public void setRight(Node node) {
+        void setRight(Node node) {
             right = node;
             if (right != null) {
                 right.parent = this;
@@ -45,7 +45,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
     }
 
     /**
-     * Root node of tree
+     * Root node of algorithms.tree
      */
     private Node root;
     // Number of nodes
@@ -57,7 +57,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 
     private Node lookup(K key) {
         if (key == null) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         Node node = root;
         while (node != null) {
@@ -76,7 +76,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
      * Determine whether a key is existing
      *
      * @param key key used to check
-     * @return true if key contained in tree else false
+     * @return true if key contained in algorithms.tree else false
      */
     public boolean contains(K key) {
         return lookup(key) != null;
@@ -94,7 +94,8 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
     }
 
     /**
-     * Put a key and value into tree. If key already in tree, overwrite its value.
+     * Put a key and value into algorithms.tree. If key already in algorithms.tree, overwrite its
+     * value.
      *
      * @param key   key of new node
      * @param value value of new node
@@ -145,7 +146,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
             --size;
             return node.value;
         }
-        // Find the maximum node in left child tree
+        // Find the maximum node in left child algorithms.tree
         Node maxLeft = node.left;
         while (maxLeft.right != null) {
             maxLeft = maxLeft.right;

@@ -1,7 +1,7 @@
-package algorithm;
+package algorithms.binarysearch;
 
 
-public class BinarySearcher {
+public class BinarySearch {
 
 
     public int search(int[] nums, int target) {
@@ -59,7 +59,7 @@ public class BinarySearcher {
     public static void main(String[] args) {
         int[] nums = new int[]{1, 2, 4, 6, 8, 9};
 
-        BinarySearcher searcher = new BinarySearcher();
+        BinarySearch searcher = new BinarySearch();
 
         int[] values = new int[]{0, 1, 4, 5, 9, 10};
         for (int v : values) {

@@ -1,4 +1,4 @@
-package string;
+package algorithms.tree.trie;
 
 
 public class Trie {
@@ -36,7 +36,7 @@ public class Trie {
         }
     }
 
-    public void index(String text) {
+    public void insert(String text) {
         if (text == null) {
             throw new IllegalArgumentException();
         }
@@ -50,7 +50,7 @@ public class Trie {
         node.isLeaf = true;
     }
 
-    public boolean contains(String text) {
+    public boolean search(String text) {
         if (text == null || root == null) {
             return false;
         }
@@ -63,6 +63,18 @@ public class Trie {
         return node.isLeaf;
     }
 
+    public boolean startsWith(String prefix) {
+        if (prefix == null || root == null) {
+            return false;
+        }
+        Node node = root;
+        for (char ch : prefix.toCharArray()) {
+            if ((node = node.get(ch)) == null) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public static void main(String[] args) {
         Trie trie = new Trie();
@@ -73,10 +85,10 @@ public class Trie {
                 "x",
         };
         for (String s : strings) {
-            trie.index(s);
+            trie.insert(s);
         }
         for (String s : strings) {
-            System.out.println(trie.contains(s));
+            System.out.println(trie.search(s));
         }
     }
 }

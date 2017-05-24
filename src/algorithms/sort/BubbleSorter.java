@@ -1,23 +1,25 @@
-package algorithm.sort;
+package algorithms.sort;
 
 
 import java.util.Arrays;
 
-
-public class InsertionSorter implements Sorter {
+/**
+ * https://en.wikipedia.org/wiki/Bubble_sort
+ */
+public class BubbleSorter implements Sorter {
 
 
     @Override
     public int[] sort(int[] nums) {
-        int n = nums.length;
-        for (int i = 1; i < n; i++) {
-            for (int j = i; j > 0; j--) {
-                if (nums[j] >= nums[j - 1]) {
-                    // [0, j] already ordered
-                    break;
+        for (int n = nums.length; n > 1; n--) {
+            boolean swapped = false;
+            for (int i = 1; i < n; i++) {
+                if (nums[i - 1] > nums[i]) {
+                    swap(nums, i - 1, i);
+                    swapped = true;
                 }
-                swap(nums, j, j - 1);
             }
+            if (!swapped) break;
         }
         return nums;
     }
@@ -27,7 +29,6 @@ public class InsertionSorter implements Sorter {
         nums[i] = nums[j];
         nums[j] = backup;
     }
-
 
     public static void main(String[] args) {
         int[] nums = new int[]{5, 4, 3, 2, 1};
