@@ -1,2 +1,3 @@
-# algorithms4j
+# algorithms
+
 Algorithms and data structures implementation in Java
