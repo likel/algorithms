@@ -12,7 +12,7 @@ public class SegmentTree {
         private Node left;
         private Node right;
 
-        public Node(int maxValue, int l, int r) {
+        Node(int maxValue, int l, int r) {
             this.maxValue = maxValue;
             this.begin = l;
             this.end = r;

@@ -4,7 +4,7 @@ package algorithms.binarysearch;
 public class BinarySearch {
 
 
-    public int search(int[] nums, int target) {
+    private int search(int[] nums, int target) {
         // Make sure nums is ordered
         int l = 0, r = nums.length - 1;
         while (l <= r) {
@@ -22,7 +22,7 @@ public class BinarySearch {
     }
 
 
-    public int findLastNumberLessThan(int[] nums, int target) {
+    private int findLastNumberLessThan(int[] nums, int target) {
         // Find the last number less than target, make sure nums is ordered.
         // For instance [1, 2, 3, 6, 7] the last number < 5 is 3.
         int l = 0, r = nums.length - 1;
@@ -39,7 +39,7 @@ public class BinarySearch {
         return r;
     }
 
-    public int findFirstNumberGreaterThan(int[] nums, int target) {
+    private int findFirstNumberGreaterThan(int[] nums, int target) {
         // Find the first number greater than target, make sure nums is ordered
         // For instance [1, 2, 3, 6, 7] the first number > 4 is 6.
         int l = 0, r = nums.length - 1;
