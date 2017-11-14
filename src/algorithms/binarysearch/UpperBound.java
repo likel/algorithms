@@ -9,10 +9,10 @@ public class UpperBound {
         while (l < r) {
             // See https://www.topcoder.com/community/data-science/data-science-tutorials/binary-search/
             int m = (r + l + 1) / 2;
-            if (nums[m] > target) {
-                r = m - 1;
-            } else {
+            if (nums[m] <= target) {
                 l = m;
+            } else {
+                r = m - 1;
             }
         }
         return nums[l] == target ? l : -1;

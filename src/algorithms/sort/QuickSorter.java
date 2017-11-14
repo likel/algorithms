@@ -1,6 +1,7 @@
 package algorithms.sort;
 
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class QuickSorter implements Sorter {
@@ -28,9 +29,8 @@ public class QuickSorter implements Sorter {
     }
 
     @Override
-    public int[] sort(int[] nums) {
+    public void sort(int[] nums) {
         sort(nums, 0, nums.length - 1);
-        return nums;
     }
 
     public static void main(String[] args) {
@@ -42,8 +42,7 @@ public class QuickSorter implements Sorter {
         }
         Sorter sorter = new QuickSorter();
         sorter.sort(arr);
-
-        for (int i = 0; i < 10; i++)
-            System.out.println(arr[i]);
+        
+        System.out.println(Arrays.toString(args));
     }
 }

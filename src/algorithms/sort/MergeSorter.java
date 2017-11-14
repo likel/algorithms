@@ -1,6 +1,7 @@
 package algorithms.sort;
 
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class MergeSorter implements Sorter {
@@ -28,10 +29,9 @@ public class MergeSorter implements Sorter {
     }
 
     @Override
-    public int[] sort(int[] nums) {
+    public void sort(int[] nums) {
         int[] reg = new int[nums.length];
         mergeSortRecursive(nums, reg, 0, nums.length - 1);
-        return nums;
     }
 
     public static void main(String[] args) {
@@ -44,7 +44,6 @@ public class MergeSorter implements Sorter {
         Sorter sorter = new MergeSorter();
         sorter.sort(arr);
 
-        for (int i = 0; i < 10; i++)
-            System.out.println(arr[i]);
+        System.out.println(Arrays.toString(arr));
     }
 }

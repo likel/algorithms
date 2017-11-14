@@ -10,7 +10,7 @@ public class BubbleSorter implements Sorter {
 
 
     @Override
-    public int[] sort(int[] nums) {
+    public void sort(int[] nums) {
         for (int n = nums.length; n > 1; n--) {
             boolean swapped = false;
             for (int i = 1; i < n; i++) {
@@ -21,7 +21,6 @@ public class BubbleSorter implements Sorter {
             }
             if (!swapped) break;
         }
-        return nums;
     }
 
     private void swap(int[] nums, int i, int j) {

@@ -8,7 +8,7 @@ public class InsertionSorter implements Sorter {
 
 
     @Override
-    public int[] sort(int[] nums) {
+    public void sort(int[] nums) {
         int n = nums.length;
         for (int i = 1; i < n; i++) {
             for (int j = i; j > 0; j--) {
@@ -19,7 +19,6 @@ public class InsertionSorter implements Sorter {
                 swap(nums, j, j - 1);
             }
         }
-        return nums;
     }
 
     private void swap(int[] nums, int i, int j) {

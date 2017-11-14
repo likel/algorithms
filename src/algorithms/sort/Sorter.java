@@ -1,8 +1,8 @@
 package algorithms.sort;
 
 
-public interface Sorter{
+public interface Sorter {
 
 
-    int[] sort(int[] nums);
+    void sort(int[] nums);
 }
